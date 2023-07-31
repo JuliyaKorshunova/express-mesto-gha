@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const express = require('express');
 const helmet = require('helmet');
 const bodyParser = require('body-parser');
+const StatusCodes = require('./utils/constants');
 
 const { PORT = 3000, DB_URL = 'mongodb://127.0.0.1:27017/mestodb' } = process.env;
 
@@ -26,7 +27,7 @@ app.use('/users', require('./routes/users'));
 app.use('/cards', require('./routes/cards'));
 
 app.use('*', (req, res) => {
-  res.status(404).send({ message: 'страница не найдена.' });
+  res.status(StatusCodes.NOT_FOUND_ERROR).send({ message: 'страница не найдена.' });
 });
 
 app.use(helmet());
