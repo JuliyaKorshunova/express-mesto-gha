@@ -1,7 +1,7 @@
 const { JWT_SECRET = 'mesto-test' } = process.env;
+const { HTTP_STATUS_OK, HTTP_STATUS_CREATED } = require('http2').constants;
 const bcrypt = require('bcryptjs');
 const mongoose = require('mongoose');
-const { HTTP_STATUS_OK, HTTP_STATUS_CREATED } = require('http2').constants;
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const BadRequestError = require('../errors/BadRequestError');
