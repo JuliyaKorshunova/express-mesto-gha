@@ -60,7 +60,7 @@ module.exports.deleteCard = (req, res, next) => {
         });
     })
     .catch((err) => {
-      if (err instanceof mongoose.Error.CastError) {
+      if (err instanceof mongoose.Error.DocumentNotFoundError) {
         next(new NotFoundError(`Карточка с _id: ${req.params.cardId} не найдена.`));
       } else {
         next(err);
