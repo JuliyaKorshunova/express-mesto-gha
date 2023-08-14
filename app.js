@@ -2,11 +2,21 @@ const mongoose = require('mongoose');
 const express = require('express');
 const helmet = require('helmet');
 const bodyParser = require('body-parser');
-const StatusCodes = require('./utils/constants');
+const { errors } = require('celebrate');
+const rateLimit = require('express-rate-limit');
+const errorHandler = require('./middlewares/error_handler');
 
 const { PORT = 3000, DB_URL = 'mongodb://127.0.0.1:27017/mestodb' } = process.env;
 
 const app = express();
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+});
+app.use(limiter);
+
+app.use(helmet());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -16,19 +26,10 @@ mongoose.connect(DB_URL, {
   useUnifiedTopology: true,
 });
 
-app.use((req, res, next) => {
-  req.user = {
-    _id: '64c59682c87d7c65a877622c',
-  };
-  next();
-});
+app.use('/', require('./routes/index'));
 
-app.use('/users', require('./routes/users'));
-app.use('/cards', require('./routes/cards'));
+app.use(errors());
 
-app.use('*', (req, res) => {
-  res.status(StatusCodes.NOT_FOUND_ERROR).send({ message: 'страница не найдена.' });
-});
+app.use(errorHandler);
 
-app.use(helmet());
 app.listen(PORT);
