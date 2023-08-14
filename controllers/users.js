@@ -16,10 +16,8 @@ module.exports.addUser = (req, res, next) => {
     .then((hash) => User.create({
       name, about, avatar, email, password: hash,
     })
-      .then(() => res.status(HTTP_STATUS_CREATED).send({
-        data: {
-          name, about, avatar, email,
-        },
+      .then((user) => res.status(HTTP_STATUS_CREATED).send({
+        name: user.name, about: user.about, avatar: user.avatar, _id: user._id, email: user.email,
       }))
       .catch((err) => {
         if (err instanceof mongoose.Error.ValidationError) {
@@ -94,7 +92,6 @@ module.exports.editUserAvatar = (req, res, next) => {
 
 module.exports.login = (req, res, next) => {
   const { email, password } = req.body;
-
   return User.findUserByCredentials(email, password)
     .then((user) => {
       const token = jwt.sign(

@@ -7,15 +7,15 @@ const httpRegex = require('../utils/constants');
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
+    default: 'Жак-Ив Кусто',
     minlength: [2, 'Минимальная длина поля 2 символа'], // минимальная длина имени — 2 символа
     maxlength: [30, 'Максимальная длина поля 30 символов'], // а максимальная — 30
-    default: 'Жак-Ив Кусто',
   },
   about: {
     type: String,
+    default: 'Исследователь',
     minlength: [2, 'Минимальная длина поля 2 символа'],
     maxlength: [30, 'Максимальная длина поля 30 символов'],
-    default: 'Исследователь',
   },
   avatar: {
     type: String,
