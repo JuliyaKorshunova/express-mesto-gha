@@ -10,7 +10,7 @@ router.post('/', celebrate({
     avatar: Joi.string().pattern(httpRegex),
     email: Joi.string().required().pattern(emailRegex),
     password: Joi.string().required().min(3),
-  }).unknown(true),
+  }),
 }), addUser);
 
 module.exports = router;
