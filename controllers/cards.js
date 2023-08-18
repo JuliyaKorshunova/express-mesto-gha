@@ -2,8 +2,8 @@ const { HTTP_STATUS_CREATED, HTTP_STATUS_OK } = require('http2').constants;
 const mongoose = require('mongoose');
 const Card = require('../models/card');
 const BadRequestError = require('../errors/BadRequestError');
-const NotFoundError = require('../errors/NotFoundError');
 const ForbiddenError = require('../errors/ForbiddenError');
+const NotFoundError = require('../errors/NotFoundError');
 
 module.exports.addCard = (req, res, next) => {
   const { name, link } = req.body;
@@ -33,7 +33,7 @@ module.exports.addCard = (req, res, next) => {
 module.exports.getCards = (req, res, next) => {
   Card.find({})
     .populate(['owner', 'likes'])
-    .then((cards) => res.send(HTTP_STATUS_OK).send(cards))
+    .then((cards) => res.status(HTTP_STATUS_OK).send(cards))
     .catch(next);
 };
 

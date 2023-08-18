@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const { celebrate, Joi } = require('celebrate');
-const httpRegex = require('../utils/constants');
+const { httpRegex } = require('../utils/constants');
+
 const {
   getUsers, getUser, getUserById, editUserData, editUserAvatar,
 } = require('../controllers/users');

@@ -1,14 +1,12 @@
 const router = require('express').Router();
 const { celebrate, Joi } = require('celebrate');
-const httpRegex = require('../utils/constants');
+const { httpRegex } = require('../utils/constants');
 
 const {
   addCard, getCards, deleteCard, likeCard, dislikeCard,
 } = require('../controllers/cards');
 
 router.get('/', getCards);
-
-// router.delete('/:cardId', deleteCard);
 
 router.delete('/:cardId', celebrate({
   params: Joi.object().keys({
